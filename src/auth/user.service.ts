@@ -2,19 +2,15 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entity/user.entity';
-import { CreateUserDTO, UpdateUserDTO } from './dto/user.dto';
+import { CreateUserDTO } from './dto/user.dto';
 import * as bcrypt from 'bcrypt';
 import { Payload } from './security/payload.interface';
-
-const relations = ['diaries', 'mory'];
+import { BaseService } from 'src/common/base.service';
 
 @Injectable()
-export class UserService {
-  constructor(@InjectRepository(User) private userRepo: Repository<User>) {}
-
-  // With Relations
-  async findOne(where: import('typeorm').FindOptionsWhere<User>) {
-    return await this.userRepo.findOne({ where, relations });
+export class UserService extends BaseService<User> {
+  constructor(@InjectRepository(User) private userRepo: Repository<User>) {
+    super(userRepo);
   }
 
   async findByPayload(payload: Payload) {
@@ -33,15 +29,6 @@ export class UserService {
   async create(createDto: CreateUserDTO): Promise<User> {
     await this.encryptPassword(createDto);
     return await this.userRepo.save(createDto);
-  }
-
-  async update(id: number, updateDto: UpdateUserDTO) {
-    // pwd 업데이트 필요시 암호화
-    return await this.userRepo.update(id, updateDto);
-  }
-
-  async delete(id: number) {
-    return await this.userRepo.delete(id);
   }
 
   //SECTION - crpyto

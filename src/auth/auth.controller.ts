@@ -91,7 +91,7 @@ export class AuthController {
 
     if (!existUser) {
       // Register flow
-      const redirectUrl = `/auth/google/redirect?status=register&email=${user.email}&name=${user.name}&provider=${user.provider}`;
+      const redirectUrl = `/auth/google/redirect?status=register&email=${user.email}&name=${user.name}`;
       return res.redirect(redirectUrl);
     } else {
       // Login flow

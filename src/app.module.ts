@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './auth/entity/user.entity';
 import { AiModule } from './ai/ai.module';
+import { ChatMessage } from './ai/entity/chat-message.entity';
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { AiModule } from './ai/ai.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [User],
+      entities: [User, ChatMessage],
       synchronize: true,
     }),
     AuthModule,

@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   ConflictException,
   Injectable,
   InternalServerErrorException,
@@ -24,7 +23,6 @@ export class AuthService {
       id: user.id,
       email: user.email,
       name: user.name,
-      role: user.role,
     };
   }
 
@@ -81,9 +79,6 @@ export class AuthService {
   }
 
   vaildateOAuth(oauthDto: OAuthDTO, user: User) {
-    if (user.provider !== oauthDto.provider) {
-      throw new BadRequestException('인증 서비스가 옳바르지 않습니다.');
-    }
     // JWT 발급
     const payload = this.userToPayload(user);
     return {

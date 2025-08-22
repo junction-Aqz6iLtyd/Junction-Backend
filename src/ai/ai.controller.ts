@@ -7,6 +7,6 @@ export class AiController {
 
   @Get('test')
   async test(@Query('content') content: string): Promise<string> {
-    return await this.aiService.ask(content);
+    return await this.aiService.generateAnswer(content);
   }
 }

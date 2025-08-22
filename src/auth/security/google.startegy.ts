@@ -3,7 +3,6 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, Profile } from 'passport-google-oauth20';
 import { OAuthDTO } from '../dto/user.dto';
-import { Provider } from '../entity/user.entity';
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
@@ -29,7 +28,6 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     const user: OAuthDTO = {
       email: emails[0].value,
       name: displayName,
-      provider: Provider.GOOGLE,
     };
 
     done(null, user); // 인증 성공
