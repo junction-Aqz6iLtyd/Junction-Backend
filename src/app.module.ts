@@ -6,6 +6,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './auth/entity/user.entity';
 import { AiModule } from './ai/ai.module';
 import { ChatMessage } from './ai/entity/chat-message.entity';
+import { WordModule } from './word/word.module';
+import { Word } from './word/entity/word.entity';
 
 @Module({
   imports: [
@@ -16,11 +18,12 @@ import { ChatMessage } from './ai/entity/chat-message.entity';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [User, ChatMessage],
+      entities: [User, ChatMessage, Word],
       synchronize: true,
     }),
     AuthModule,
     AiModule,
+    WordModule,
   ],
   controllers: [AppController],
   providers: [AppService],
