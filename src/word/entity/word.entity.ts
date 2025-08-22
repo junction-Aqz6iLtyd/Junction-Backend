@@ -1,4 +1,3 @@
-import { User } from 'src/auth/entity/user.entity';
 import {
   Column,
   CreateDateColumn,
@@ -6,14 +5,15 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { WordList } from './word-list.entity';
 
 @Entity()
 export class Word {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => User, (user) => user.words)
-  user: User;
+  @ManyToOne(() => WordList, (wordList) => wordList.words)
+  wordList: WordList;
 
   @Column()
   english: string;
