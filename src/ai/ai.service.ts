@@ -1,7 +1,7 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import OpenAI from 'openai';
 
-@Injectable()
+@Injectable()a
 export class AiService {
   async ask(content: string): Promise<string> {
     const apiKey = process.env.SOLAR_API_KEY;
