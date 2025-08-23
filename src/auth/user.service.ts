@@ -6,10 +6,14 @@ import { CreateUserDTO } from './dto/user.dto';
 import * as bcrypt from 'bcrypt';
 import { Payload } from './security/payload.interface';
 import { BaseService } from 'src/common/base.service';
+import { PetService } from 'src/pet/pet.service';
 
 @Injectable()
 export class UserService extends BaseService<User> {
-  constructor(@InjectRepository(User) private userRepo: Repository<User>) {
+  constructor(
+    @InjectRepository(User) private userRepo: Repository<User>,
+    private petService: PetService,
+  ) {
     super(userRepo);
   }
 
@@ -28,7 +32,9 @@ export class UserService extends BaseService<User> {
   /** Include encrypting password */
   async create(createDto: CreateUserDTO): Promise<User> {
     await this.encryptPassword(createDto);
-    return await this.userRepo.save(createDto);
+    const user = await this.userRepo.save(createDto);
+    await this.petService.save({ user: { id: user.id } });
+    return user;
   }
 
   //SECTION - crpyto
