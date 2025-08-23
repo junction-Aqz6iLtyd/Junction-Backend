@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -18,7 +18,7 @@ import { PetModule } from 'src/pet/pet.module';
       secret: process.env.JWTKEY, // dotenv로 분리 가능
       signOptions: { expiresIn: '12h' },
     }),
-    PetModule,
+    forwardRef(() => PetModule),
   ],
   exports: [JwtModule, UserService],
   controllers: [AuthController],

@@ -8,9 +8,9 @@ import { PetModule } from 'src/pet/pet.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Deco]),
-    AuthModule,
     forwardRef(() => PetModule),
+    forwardRef(() => AuthModule),
+    TypeOrmModule.forFeature([Deco]),
   ],
   controllers: [DecoController],
   providers: [DecoService],

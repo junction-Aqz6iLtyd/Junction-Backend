@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Query, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Query, Req, UseGuards } from '@nestjs/common';
 import { DecoService } from './deco.service';
 import { LoginGuard } from 'src/auth/security/auth.guard';
 import { Request } from 'express';
@@ -14,6 +14,11 @@ export class DecoController {
   getAllDecos() {
     // TODO: 내가 가지고 있는거
     return this.decoService.find({});
+  }
+
+  @Get('/detail/:id')
+  async getDetail(@Param('id') id: number){
+    return await this.decoService.findOne({ id });
   }
 
   @Get('buy')
