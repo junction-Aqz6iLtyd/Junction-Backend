@@ -26,4 +26,7 @@ export class Word {
 
   @CreateDateColumn()
   createdAt: Date;
+
+  @Column({ default: '' })
+  example: string;
 }

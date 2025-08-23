@@ -64,6 +64,7 @@ export class WordController {
   @Post('/:listId')
   @UseGuards(LoginGuard)
   async insert(@Param('listId') listId: number, @Body() dto: CreateWordDTO) {
+    if (!dto.english || !dto.korean) throw new BadRequestException('값 미충족');
     this.logger.log(`'${listId}' <- '${dto.english}' 단어 추가`);
     return await this.wordService.customSave(listId, dto);
   }
