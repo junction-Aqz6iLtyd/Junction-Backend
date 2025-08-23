@@ -14,7 +14,7 @@ export class WordList {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => User, (user) => user.wordLists)
+  @ManyToOne(() => User, (user) => user.wordLists, { onDelete: 'CASCADE' })
   user: User;
 
   @Column()

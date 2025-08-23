@@ -8,6 +8,7 @@ import { AiModule } from './ai/ai.module';
 import { ChatMessage } from './ai/entity/chat-message.entity';
 import { WordModule } from './word/word.module';
 import { Word } from './word/entity/word.entity';
+import { WordList } from './word/entity/word-list.entity';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { Word } from './word/entity/word.entity';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [User, ChatMessage, Word],
+      entities: [User, ChatMessage, Word, WordList],
       synchronize: true,
     }),
     AuthModule,

@@ -11,13 +11,13 @@ export class WordService extends BaseService<Word> {
     super(repo);
   }
 
-  getByUserId(userId: number) {
-    return this.find({ user: { id: userId } });
+  getByWordListId(listId: number) {
+    return this.find({ wordList: { id: listId } });
   }
 
-  customSave(userId: number, dto: CreateWordDTO) {
+  customSave(listId: number, dto: CreateWordDTO) {
     return this.save({
-      user: { id: userId },
+      wordList: { id: listId },
       ...dto,
     });
   }
