@@ -1,5 +1,5 @@
 import { User } from 'src/auth/entity/user.entity';
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Goal {
@@ -15,6 +15,9 @@ export class Goal {
   @Column('simple-json')
   week: number[];
 
-  @OneToOne(() => User, (user) => user.goal)
+  @Column({ default: false })
+  isEveryday: boolean;
+
+  @ManyToOne(() => User, (user) => user.goals)
   user: User;
 }

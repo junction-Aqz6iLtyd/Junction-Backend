@@ -38,7 +38,6 @@ export class User {
   @JoinColumn()
   pet: Pet;
 
-  @OneToOne(() => Goal, (goal) => goal.user, { cascade: true })
-  @JoinColumn()
-  goal: Goal;
+  @OneToMany(() => Goal, (goal) => goal.user, { cascade: true })
+  goals: Goal[];
 }

@@ -16,7 +16,7 @@ export class UserService extends BaseService<User> {
     private petService: PetService,
     private goalService: GoalService,
   ) {
-    super(userRepo, ['goal']);
+    super(userRepo, ['goals']);
   }
 
   async findByPayload(payload: Payload) {
@@ -34,9 +34,8 @@ export class UserService extends BaseService<User> {
   /** Include encrypting password */
   async create(createDto: CreateUserDTO): Promise<User> {
     await this.encryptPassword(createDto);
-    const user = await this.userRepo.save(createDto);
+    const user = await this.userRepo.save({ ...createDto, goals: [] });
     await this.petService.save({ user: { id: user.id } });
-    await this.goalService.createEmpty(user.id);
     return user;
   }
 
