@@ -12,7 +12,7 @@ export class Goal {
   @Column()
   content: string;
 
-  @Column({ default: [] })
+  @Column('simple-json')
   week: number[];
 
   @OneToOne(() => User, (user) => user.goal)

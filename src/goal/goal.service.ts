@@ -15,6 +15,7 @@ export class GoalService extends BaseService<Goal> {
       user: { id: userId },
       title: '',
       content: '',
+      week: [],
     });
   }
 }
