@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { english_by_basic_sentence as basic_sentences } from './config/english_by_basic_sentence';
 import { voca_10000 } from './config/voca_10000';
+import { Level } from 'src/auth/entity/user.entity';
+import { UserService } from 'src/auth/user.service';
 
 const setting = {
   quiz1_count: 3,
@@ -10,11 +12,13 @@ const setting = {
 
 @Injectable()
 export class QuizService {
+  constructor(private userService: UserService) {}
+
   rand(length: number) {
     return Math.floor(Math.random() * length);
   }
 
-  getRandomIndexArray(array: any[], count: number) {
+  getRandomArray(array: any[], count: number) {
     const indexArray: number[] = [];
     for (let i = 0; i < array.length; i++) indexArray.push(i);
     const result: any[] = [];
@@ -47,7 +51,7 @@ export class QuizService {
   makeSentenseQuiz1() {
     const expression_list =
       basic_sentences[this.rand(basic_sentences.length)].expression_list;
-    const selectedExpressions = this.getRandomIndexArray(
+    const selectedExpressions = this.getRandomArray(
       expression_list,
       setting.quiz1_count,
     );
@@ -85,8 +89,13 @@ export class QuizService {
     };
   }
 
-  makeVocaQuiz1() {
-    const words = this.getRandomIndexArray(voca_10000, setting.voca_count);
+  async makeVocaQuiz1(userId: number) {
+    const user = await this.userService.findOne({ id: userId });
+    const level = user?.level ?? Level.TOEFL;
+    const levelingWords = voca_10000.filter(
+      (word) => word.level.indexOf(level) != -1,
+    );
+    const words = this.getRandomArray(levelingWords, setting.voca_count);
     const answerIndex = this.rand(setting.voca_count);
     const quiz = words[answerIndex].word;
     const questions: string[] = [];

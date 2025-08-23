@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { IsNotEmpty } from 'class-validator';
+import { Level } from '../entity/user.entity';
 
 export class CreateUserDTO {
   @IsNotEmpty()
@@ -8,6 +9,7 @@ export class CreateUserDTO {
   email: string;
   @IsNotEmpty()
   password: string;
+  level: Level;
 }
 
 export interface UpdateUserDTO {

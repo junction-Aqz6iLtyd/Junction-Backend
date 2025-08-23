@@ -11,6 +11,12 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
+export enum Level {
+  TOEFL = 'TOEFL',
+  GRE_VERBAL = 'GRE verbal test',
+  HIGH_SCHOOL = '고교 필수 어휘',
+}
+
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
@@ -27,6 +33,13 @@ export class User {
 
   @Column({ default: 1000 })
   point: number;
+
+  @Column({
+    type: 'enum',
+    enum: Level,
+    default: Level.TOEFL,
+  })
+  level: Level;
 
   @OneToMany(() => ChatMessage, (message) => message.user)
   chatMessages: ChatMessage[];
