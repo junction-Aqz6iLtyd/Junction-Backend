@@ -12,6 +12,7 @@ import { WordList } from './word/entity/word-list.entity';
 import { PetModule } from './pet/pet.module';
 import { DecoModule } from './deco/deco.module';
 import { Pet } from './pet/entity/pet.entity';
+import { Deco } from './deco/entity/deco.entity';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { Pet } from './pet/entity/pet.entity';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [User, ChatMessage, Word, WordList, Pet],
+      entities: [User, ChatMessage, Word, WordList, Pet, Deco],
       synchronize: true,
     }),
     AuthModule,
