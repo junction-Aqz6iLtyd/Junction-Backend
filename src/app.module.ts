@@ -15,6 +15,7 @@ import { Pet } from './pet/entity/pet.entity';
 import { Deco } from './deco/entity/deco.entity';
 import { GoalModule } from './goal/goal.module';
 import { Goal } from './goal/entity/goal.entity';
+import { QuizModule } from './quiz/quiz.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { Goal } from './goal/entity/goal.entity';
     PetModule,
     DecoModule,
     GoalModule,
+    QuizModule,
   ],
   controllers: [AppController],
   providers: [AppService],
