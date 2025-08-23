@@ -12,9 +12,7 @@ export class PetService extends BaseService<Pet> {
 
   async getByUserId(userId: number) {
     const pet = await this.findOne({ user: { id: userId } });
-    return {
-      ...pet,
-    };
+    return pet;
   }
 
   async selectDeco(userId: number, decoId: number) {

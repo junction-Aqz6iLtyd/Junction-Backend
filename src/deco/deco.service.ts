@@ -5,12 +5,21 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Deco } from './entity/deco.entity';
+import { Deco, DecoType } from './entity/deco.entity';
 import { BaseService } from 'src/common/base.service';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserService } from 'src/auth/user.service';
 import { PetService } from 'src/pet/pet.service';
+
+export interface ShopItem {
+  id: number;
+  decoType: DecoType;
+  itemId: number;
+  name: string;
+  price: number;
+  hasDeco: boolean;
+}
 
 @Injectable()
 export class DecoService extends BaseService<Deco> {
@@ -20,6 +29,19 @@ export class DecoService extends BaseService<Deco> {
     @Inject(forwardRef(() => PetService)) private petService: PetService,
   ) {
     super(repo);
+  }
+
+  async findWithStatus(userId: number) {
+    const decos = await this.find({});
+    const pet = await this.petService.getByUserId(userId);
+    const items: ShopItem[] = [];
+    decos.forEach((deco) => {
+      items.push({
+        ...deco,
+        hasDeco: pet?.decos.some((own) => own.id == deco.id) ?? false,
+      });
+    });
+    return items;
   }
 
   async buyItem(userId: number, decoId: number) {

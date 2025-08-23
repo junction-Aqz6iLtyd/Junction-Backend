@@ -12,12 +12,17 @@ export class DecoController {
 
   @Get()
   getAllDecos() {
-    // TODO: 내가 가지고 있는거
     return this.decoService.find({});
+  }
+  @Get('shop')
+  @UseGuards(LoginGuard)
+  async shop(@Req() req: Request) {
+    const payload = req.user as Payload;
+    return await this.decoService.findWithStatus(payload.id);
   }
 
   @Get('/detail/:id')
-  async getDetail(@Param('id') id: number){
+  async getDetail(@Param('id') id: number) {
     return await this.decoService.findOne({ id });
   }
 
@@ -30,8 +35,26 @@ export class DecoController {
 
   @Get('init')
   init() {
-    this.decoService.save({ id:1, itemId: 1, name: '여행가는 야옹이', price: 0, pets: [] });
-    this.decoService.save({ id:2, itemId: 2, name: '집 가는 멍뭉이', price: 1000, pets: [] });
-    this.decoService.save({ id:3, itemId: 3, name: '화난 햄찌', price: 1100, pets: [] });
+    this.decoService.save({
+      id: 1,
+      itemId: 1,
+      name: '여행가는 야옹이',
+      price: 0,
+      pets: [],
+    });
+    this.decoService.save({
+      id: 2,
+      itemId: 2,
+      name: '집 가는 멍뭉이',
+      price: 1000,
+      pets: [],
+    });
+    this.decoService.save({
+      id: 3,
+      itemId: 3,
+      name: '화난 햄찌',
+      price: 1400,
+      pets: [],
+    });
   }
 }
