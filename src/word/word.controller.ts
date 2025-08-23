@@ -4,6 +4,7 @@ import {
   Controller,
   Delete,
   Get,
+  Logger,
   NotFoundException,
   Param,
   Patch,
@@ -24,6 +25,7 @@ export class WordController {
     private wordService: WordService,
     private wordListService: WordListService,
   ) {}
+  private logger = new Logger('Words');
 
   // SECTION - Word List
   @Get()
@@ -47,6 +49,7 @@ export class WordController {
   async create(@Req() req: Request, @Body() dto: { name: string }) {
     if (!dto.name || dto.name.length == 0)
       throw new BadRequestException('단어장의 이름을 입력하세요');
+    this.logger.log(`'${dto.name}' 단어장 생성`);
     const payload = req.user as Payload;
     return await this.wordListService.createNewList(payload.id, dto.name);
   }
@@ -54,12 +57,14 @@ export class WordController {
   @Delete('/:id')
   @UseGuards(LoginGuard)
   async deleteList(@Param('id') id: number) {
+    this.logger.log(`'id: ${id}' 단어장 삭제`);
     return await this.wordListService.delete(id);
   }
   // SECTION - Word
   @Post('/:listId')
   @UseGuards(LoginGuard)
   async insert(@Param('listId') listId: number, @Body() dto: CreateWordDTO) {
+    this.logger.log(`'${listId}' <- '${dto.english}' 단어 추가`);
     return await this.wordService.customSave(listId, dto);
   }
 
@@ -70,6 +75,7 @@ export class WordController {
     @Param('wordId') wordId: number,
     @Body() dto: UpdateWordDTO,
   ) {
+    this.logger.log(`'${listId}' <- '${dto.english}' 단어 수정`);
     return await this.wordListService.updateWordInList(listId, wordId, dto);
   }
 
@@ -79,6 +85,7 @@ export class WordController {
     @Param('listId') listId: number,
     @Param('wordId') wordId: number,
   ) {
+    this.logger.log(`'${listId}' <- 'id: ${wordId}' 단어 삭제`);
     return await this.wordService.delete(wordId);
   }
 }

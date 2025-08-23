@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Controller,
   Get,
+  Logger,
   Query,
   Req,
   UseGuards,
@@ -14,6 +15,7 @@ import { Request } from 'express';
 @Controller('pet')
 export class PetController {
   constructor(private petService: PetService) {}
+  private logger = new Logger('Pet');
 
   @Get()
   @UseGuards(LoginGuard)
@@ -29,6 +31,7 @@ export class PetController {
   async selectDeco(@Req() req: Request, @Query('decoId') decoId: number) {
     if (!decoId) throw new BadRequestException('장식품 ID 필요');
     const payload = req.user as Payload;
+    this.logger.log(`${payload.name} -> 'id: ${decoId}' 장식품 선택`);
     return await this.petService.selectDeco(payload.id, decoId);
   }
 }
