@@ -16,7 +16,7 @@ export class UserService extends BaseService<User> {
     private petService: PetService,
     private goalService: GoalService,
   ) {
-    super(userRepo);
+    super(userRepo, ['goal']);
   }
 
   async findByPayload(payload: Payload) {
