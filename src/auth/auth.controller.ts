@@ -8,20 +8,13 @@ import {
   Patch,
   Post,
   Req,
-  Res,
   UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UserService } from './user.service';
-import {
-  CreateUserDTO,
-  LoginUserDTO,
-  OAuthDTO,
-  UpdateUserDTO,
-} from './dto/user.dto';
+import { CreateUserDTO, LoginUserDTO, UpdateUserDTO } from './dto/user.dto';
 import { LoginGuard } from './security/auth.guard';
-import { Request, Response } from 'express';
-import { AuthGuard } from '@nestjs/passport';
+import { Request } from 'express';
 import { Payload } from './security/payload.interface';
 
 interface TokenResponse {
@@ -71,33 +64,5 @@ export class AuthController {
   @UseGuards(LoginGuard)
   async update(@Req() req: Request, @Body() updateDto: UpdateUserDTO) {
     return this.userService.update((req.user as Payload).id, updateDto);
-  }
-
-  //SECTION - OAuth 2.0
-  @Get('google')
-  @UseGuards(AuthGuard('google'))
-  googleLogin() {
-    this.logger.log(`누군가 Google Redirect 요청`);
-  }
-
-  @Get('google/redirect')
-  @UseGuards(AuthGuard('google'))
-  async googleLoginRedirect(
-    @Req() req: Request,
-    @Res() res: Response,
-  ): Promise<void> {
-    const user = req.user as OAuthDTO;
-    const existUser = await this.userService.findOne({ email: user.email });
-
-    if (!existUser) {
-      // Register flow
-      const redirectUrl = `/auth/google/redirect?status=register&email=${user.email}&name=${user.name}`;
-      return res.redirect(redirectUrl);
-    } else {
-      // Login flow
-      const tokenResponse = this.authService.vaildateOAuth(user, existUser);
-      const redirectUrl = `/auth/google/redirect?status=login&accessToken=${tokenResponse.accessToken}`;
-      return res.redirect(redirectUrl);
-    }
   }
 }

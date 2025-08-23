@@ -8,7 +8,7 @@ import { UserService } from './user.service';
 import { JwtService } from '@nestjs/jwt';
 import { User } from './entity/user.entity';
 import { Payload } from './security/payload.interface';
-import { CreateUserDTO, LoginUserDTO, OAuthDTO } from './dto/user.dto';
+import { CreateUserDTO, LoginUserDTO } from './dto/user.dto';
 import * as jwt from 'jsonwebtoken';
 
 @Injectable()
@@ -76,13 +76,5 @@ export class AuthService {
     } catch {
       return false;
     }
-  }
-
-  vaildateOAuth(oauthDto: OAuthDTO, user: User) {
-    // JWT 발급
-    const payload = this.userToPayload(user);
-    return {
-      accessToken: this.jwtService.sign(payload),
-    };
   }
 }
