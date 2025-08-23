@@ -7,12 +7,14 @@ import * as bcrypt from 'bcrypt';
 import { Payload } from './security/payload.interface';
 import { BaseService } from 'src/common/base.service';
 import { PetService } from 'src/pet/pet.service';
+import { GoalService } from 'src/goal/goal.service';
 
 @Injectable()
 export class UserService extends BaseService<User> {
   constructor(
     @InjectRepository(User) private userRepo: Repository<User>,
     private petService: PetService,
+    private goalService: GoalService,
   ) {
     super(userRepo);
   }
@@ -34,6 +36,7 @@ export class UserService extends BaseService<User> {
     await this.encryptPassword(createDto);
     const user = await this.userRepo.save(createDto);
     await this.petService.save({ user: { id: user.id } });
+    await this.goalService.createEmpty(user.id);
     return user;
   }
 

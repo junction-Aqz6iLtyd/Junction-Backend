@@ -1,4 +1,5 @@
 import { ChatMessage } from 'src/ai/entity/chat-message.entity';
+import { Goal } from 'src/goal/entity/goal.entity';
 import { Pet } from 'src/pet/entity/pet.entity';
 import { WordList } from 'src/word/entity/word-list.entity';
 import {
@@ -36,4 +37,8 @@ export class User {
   @OneToOne(() => Pet, (pet) => pet.user, { cascade: true })
   @JoinColumn()
   pet: Pet;
+
+  @OneToOne(() => Goal, (goal) => goal.user, { cascade: true })
+  @JoinColumn()
+  goal: Goal;
 }

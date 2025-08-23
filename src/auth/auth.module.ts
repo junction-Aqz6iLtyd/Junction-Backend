@@ -8,6 +8,7 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './security/jwt.strategy';
 import { PetModule } from 'src/pet/pet.module';
+import { GoalModule } from 'src/goal/goal.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { PetModule } from 'src/pet/pet.module';
       signOptions: { expiresIn: '12h' },
     }),
     forwardRef(() => PetModule),
+    GoalModule,
   ],
   exports: [JwtModule, UserService],
   controllers: [AuthController],

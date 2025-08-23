@@ -13,6 +13,8 @@ import { PetModule } from './pet/pet.module';
 import { DecoModule } from './deco/deco.module';
 import { Pet } from './pet/entity/pet.entity';
 import { Deco } from './deco/entity/deco.entity';
+import { GoalModule } from './goal/goal.module';
+import { Goal } from './goal/entity/goal.entity';
 
 @Module({
   imports: [
@@ -23,7 +25,7 @@ import { Deco } from './deco/entity/deco.entity';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [User, ChatMessage, Word, WordList, Pet, Deco],
+      entities: [User, ChatMessage, Word, WordList, Pet, Deco, Goal],
       synchronize: true,
     }),
     AuthModule,
@@ -31,6 +33,7 @@ import { Deco } from './deco/entity/deco.entity';
     WordModule,
     PetModule,
     DecoModule,
+    GoalModule,
   ],
   controllers: [AppController],
   providers: [AppService],
