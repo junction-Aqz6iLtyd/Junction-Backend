@@ -9,4 +9,9 @@ export class QuizController {
   quiz1() {
     return this.quizService.makeQuiz1();
   }
+
+  @Get('quiz2')
+  quiz2() {
+    return this.quizService.makeQuiz2();
+  }
 }
