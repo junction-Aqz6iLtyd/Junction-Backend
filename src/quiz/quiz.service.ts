@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { english_by_basic_sentence as basic_sentences } from './config/english_by_basic_sentence';
+import { voca_10000 } from './config/voca_10000';
 
 const setting = {
   quiz1_count: 3,
   quiz2_count: 3,
+  voca_count: 3,
 };
 
 @Injectable()
@@ -42,7 +44,7 @@ export class QuizService {
     return arr[this.rand(arr.length)];
   }
 
-  makeQuiz1() {
+  makeSentenseQuiz1() {
     const expression_list =
       basic_sentences[this.rand(basic_sentences.length)].expression_list;
     const selectedExpressions = this.getRandomIndexArray(
@@ -62,7 +64,7 @@ export class QuizService {
     };
   }
 
-  makeQuiz2() {
+  makeSentenseQuiz2() {
     const examples: string[] = [];
     for (let i = 0; i < setting.quiz2_count; i++) {
       const expression_list =
@@ -76,6 +78,20 @@ export class QuizService {
       const example = examples[i];
       questions.push(this.extractInsideI(example)[0]);
     }
+    return {
+      quiz,
+      answer: answerIndex,
+      questions,
+    };
+  }
+
+  makeVocaQuiz1() {
+    const words = this.getRandomIndexArray(voca_10000, setting.voca_count);
+    const answerIndex = this.rand(setting.voca_count);
+    const quiz = words[answerIndex].word;
+    const questions: string[] = [];
+    for (let i = 0; i < setting.quiz2_count; i++)
+      questions.push(words[i].word_meaning);
     return {
       quiz,
       answer: answerIndex,

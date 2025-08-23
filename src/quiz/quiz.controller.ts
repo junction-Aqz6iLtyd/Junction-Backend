@@ -5,13 +5,18 @@ import { QuizService } from './quiz.service';
 export class QuizController {
   constructor(private quizService: QuizService) {}
 
-  @Get('quiz1')
+  @Get('sentence/quiz1')
   quiz1() {
-    return this.quizService.makeQuiz1();
+    return this.quizService.makeSentenseQuiz1();
   }
 
-  @Get('quiz2')
+  @Get('sentence/quiz2')
   quiz2() {
-    return this.quizService.makeQuiz2();
+    return this.quizService.makeSentenseQuiz2();
+  }
+
+  @Get('voca/quiz1')
+  vocaQuiz1() {
+    return this.quizService.makeVocaQuiz1();
   }
 }
