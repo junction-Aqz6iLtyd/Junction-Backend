@@ -14,10 +14,7 @@ export class Pet {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ default: 0 })
-  selectedItemId: number;
-
-  @Column()
+  @Column({ default: 1 })
   selectedDecoId: number;
 
   @ManyToMany(() => Deco, (deco) => deco.pets, { cascade: true })

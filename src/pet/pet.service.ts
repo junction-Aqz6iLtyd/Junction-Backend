@@ -7,7 +7,7 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class PetService extends BaseService<Pet> {
   constructor(@InjectRepository(Pet) repo: Repository<Pet>) {
-    super(repo);
+    super(repo, ['decos']);
   }
 
   getByUserId(userId: number) {
