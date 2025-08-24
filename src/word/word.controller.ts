@@ -65,7 +65,7 @@ export class WordController {
   @UseGuards(LoginGuard)
   async insert(@Param('listId') listId: number, @Body() dto: CreateWordDTO) {
     if (!dto.english || !dto.korean) throw new BadRequestException('값 미충족');
-    this.logger.log(`'${listId}' <- '${dto.english}' 단어 추가`);
+    this.logger.log(`'id: ${listId}' <- '${dto.english}' 단어 추가`);
     return await this.wordService.customSave(listId, dto);
   }
 
@@ -76,7 +76,7 @@ export class WordController {
     @Param('wordId') wordId: number,
     @Body() dto: UpdateWordDTO,
   ) {
-    this.logger.log(`'${listId}' <- '${dto.english}' 단어 수정`);
+    this.logger.log(`'id: ${listId}' <- '${dto.english}' 단어 수정`);
     return await this.wordListService.updateWordInList(listId, wordId, dto);
   }
 
@@ -86,7 +86,7 @@ export class WordController {
     @Param('listId') listId: number,
     @Param('wordId') wordId: number,
   ) {
-    this.logger.log(`'${listId}' <- 'id: ${wordId}' 단어 삭제`);
+    this.logger.log(`'id: ${listId}' <- 'id: ${wordId}' 단어 삭제`);
     return await this.wordService.delete(wordId);
   }
 }

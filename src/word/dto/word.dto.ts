@@ -7,4 +7,5 @@ export interface CreateWordDTO {
 export interface UpdateWordDTO {
   english?: string;
   korean?: string;
+  example?: string;
 }
